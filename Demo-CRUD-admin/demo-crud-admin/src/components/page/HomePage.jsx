@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 function HomePage() {
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const loadUser = async () => {
+    const result = await axios.get("http://localhost:8000/users");
+    setData(result.data);
+  };
 
   // Về mọi người tìm hiểu về async và await
   useEffect(() => {
-    const loadUser = async () => {
-      const result = await axios.get("http://localhost:8000/users");
-      setData(result.data);
-    };
     loadUser();
   }, []);
+
+  const handleDelete = async (id) => {
+    await axios.delete(`http://localhost:8000/users/${id}`);
+    loadUser();
+  };
+
+  const { id } = useParams();
+  console.log(id);
   return (
     <div style={{ marginTop: "50px", textAlign: "center" }}>
       <h1>Home Page</h1>
@@ -39,20 +52,34 @@ function HomePage() {
               <td>{element.email}</td>
               <td>
                 <Link>
-                  <Button variant='outline-primary'>
-                    <i class='fa-solid fa-eye'></i>
+                  <Button variant='outline-primary' onClick={handleShow}>
+                    <i className='fa-solid fa-eye'></i>
                   </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Tên người dùng - kèm - id</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Đây sẽ là phần để đổ dữ liệu vào</Modal.Body>
+                    <Modal.Footer>
+                      <Button variant='secondary' onClick={handleClose}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </Link>
               </td>
               <td>
-                <Link>
+                <Link to={`/user/edit/${element.id}`}>
                   <Button variant='outline-warning'>Edit</Button>
                 </Link>
               </td>
               <td>
-                <Link>
-                  <Button variant='outline-danger'>Delete</Button>
-                </Link>
+                <Button
+                  variant='outline-danger'
+                  onClick={() => handleDelete(element.id)}
+                >
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}
