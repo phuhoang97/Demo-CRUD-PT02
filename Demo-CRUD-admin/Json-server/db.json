@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "Duy Khánh Dzai",
+      "phone": "032456445",
+      "email": "duy@gmail.com"
+    },
+    {
+      "id": 2,
+      "username": "Minh Thành",
+      "phone": "085645135",
+      "email": "thanh@gmail.com"
+    },
+    {
+      "id": 3,
+      "username": "Mai Lê",
+      "phone": "089645325",
+      "email": "mai@gmail.com"
+    },
+    {
+      "id": 5,
+      "username": "Mạnh Hùng",
+      "phone": "0324565655",
+      "email": "hung@gmail.com"
+    },
+    {
+      "id": 6,
+      "username": "Diên Vũ",
+      "phone": "0354565655",
+      "email": "vu@gmail.com"
+    },
+    {
+      "username": "Hoàng",
+      "phone": "012345431",
+      "email": "hoang@gmail.com",
+      "id": 7
+    }
+  ]
+}
